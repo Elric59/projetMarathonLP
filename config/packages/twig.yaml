@@ -1,0 +1,7 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    globals:
+        base_url: '%base_url%'
+        user_path: '%user_path%'
+        user_video: '%user_video%'
+

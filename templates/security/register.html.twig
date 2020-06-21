@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 ">
+                <h1>Inscription</h1>
+
+                <div class="card">
+                    {{ form(form) }}
+                </div>
+
+            </div>
+        </div>
+        <a class="btn btn-danger" role="button" href="{{ path('user_index') }}">Annuler</a>
+
+        <div class="mx-auto my-3 w-100 text-center">
+            <img style="height: 250px;" src="{{ asset(user_path~'/popcorn.png') }}">
+        </div>
+    </div>
+
+
+{% endblock %}

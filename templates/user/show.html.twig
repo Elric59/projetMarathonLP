@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    <h1 style="margin-top: 2%; margin-left: 11%; margin-bottom: 2%;">User</h1>
+
+    <table style="margin-left: 10%;">
+        <tbody class="table">
+
+            <tr>
+                <td><img style="max-width:150px; margin-bottom: 15%;" src="{{ asset(user_path~'/'~user.avatar)}}" class="img-thumbnail"/></td>
+            </tr>
+            <tr>
+                <th>Username :</th>
+                <td>{{ user.username }}</td>
+            </tr>
+
+
+            <tr>
+                <th>Email :</th>
+                <td>{{ user.email }}</td>
+            </tr>
+
+            <tr>
+                <th>Inscris depuis : </th>
+                <td>{{ user.createdAt ? user.createdAt|date('d-m-Y') : '' }}</td>
+            </tr>
+
+            <tr>
+                <th>Overview :</th>
+                <td>{{ user.overview }}</td>
+            </tr>
+
+            <tr>
+                <th>Temps passé : </th>
+                <td>{{ duree[0][1]}} minutes</td>
+            </tr>
+
+            <tr>
+
+                <th>Serie/nb ep regardé : </th>
+
+                {%  for user in users %}
+                    <tr>
+                        <td>Serie : {{ user['name'] }}</td><td> Nb EP regardé : {{ user[1] }} </td><td>Saison  : {{ user['season'] }} </td>
+                    </tr>
+                {% endfor %}
+
+            </tr>
+            <tr>
+                <th>Commentaire Laissé </th>
+                {% for commentaire in commentaires %}
+                    <td> {{ commentaire.getSeries() }} </td><td>{{ commentaire.getValidated() }}</td><td>{{ commentaire.getContent() }}</td>
+                {% endfor %}
+            </tr>
+
+        </tbody>
+
+
+    </table>
+
+    <button style="background-color: #30D9A9; border-radius: 20px; margin-left: 10%; margin-top: 2%;">
+    <a href="{{ path('user_edit', {'id': app.user.id}) }}" style="margin-left: 20px; margin-right: 20px;">Edit</a>
+    </button>
+
+
+
+
+{#
+    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+       {{ include('user/_delete_form.html.twig') }}
+ #}
+{% endblock %}

@@ -1,0 +1,83 @@
+{% block stylesheets %}
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Cabin&display=swap" rel="stylesheet">
+{% endblock %}
+
+
+<div class="p-4 w-100 bg-dark">
+    <div class="d-flex flex-wrap justify-content-around align-items-center">
+
+
+
+        <!-- A GAUCHE -->
+        <div>
+            <a href="{{ path('home') }}">
+                <img style="height: 50px;" src="{{ asset(user_path~'/logo-white.png') }}">
+            </a>
+        </div>
+
+        <!-- AU MILIEU-->
+
+        <div class="row" >
+            {#{% if form is defined %}
+            {{ form_start(form.Recherche,{'attr':{'class':'d-flex flex-wrap'}}) }}
+            {{ form_row(form.Recherche,{'attr':{'class':'bg-transparent m-2 border border-colorA text-white rounded-pill px-3 py-1 '}}) }}
+
+            {{ form_widget(form.Choix, {'attr':{'class':'bg-transparent m-2 border border-colorA text-white rounded-pill px-3 py-1'}}) }}
+            <input type="submit" class="fas fa-address-card">
+            {{ form_end(form) }}
+            {% endif %}#}
+
+
+        <!-- A DROITE -->
+        <div class="">
+
+            <!-- Si loged in-->
+            {% if is_granted('ROLE_USER') %}
+
+
+{#                <a class="btn btn-outline-secondary" href="{{ path('user_edit', {'id': app.user.id}) }}" role="button">#}
+{#                    Edit Profile#}
+{#                </a>#}
+                <a class="btn btn-outline-danger" href="{{ path('app_logout') }}" role="button">
+                    Disconnect
+                </a>
+                <a class="btn btn-outline-success" href="{{ path('user_show', {'id': app.user.id}) }}" role="button">
+                    {{ app.user.username }}
+                    {% if app.user.avatar != null %}
+                        <img style="max-width:150px;" src="{{ asset(user_path~'/'~app.user.avatar)}}" class="img-thumbnail"/>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_ADMIN') %}
+                        [ADMIN]
+                    {% endif %}
+                </a>
+
+                <!-- Si non loged in-->
+            {% else %}
+                <a class="btn-component btn bg-colorB text-white font-weight-bold rounded border-0" role="button" href="{{ path('app_login') }}">Log me</a>
+                <a class="btn-component btn bg-colorB text-white font-weight-bold rounded border-0" href="{{ path('app_register') }}">S'inscrire</a>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+</div>
+{#<div class="container">#}
+{#    <div class="row">#}
+{#        <div class="col-sm-2">#}
+{#            <a class="text-primary" href="{{ path('kind_index') }}">Kind</a>#}
+{#        </div>#}
+{#        <div class="col-sm-2">#}
+{#            <a class="text-primary" href="{{ path('series_index') }}">Series</a>#}
+{#        </div>#}
+{#        <div class="col-sm-2">#}
+{#            <a class="text-primary" href="{{ path('episodes_index') }}">Episodes</a>#}
+{#        </div>#}
+
+{#    </div>#}
+
+{#</div>#}
+
+
+

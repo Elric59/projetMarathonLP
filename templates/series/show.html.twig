@@ -1,0 +1,388 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Series{% endblock %}
+
+{% block body %}
+
+
+
+
+
+
+
+
+    <section class="contenu-du-site bg-dark" >
+        <h1>Fiche {{ series.name }}</h1>
+        <section class="section-infos-serie">
+            <p><b>Créée le : </b>{{ series.premiere ? series.premiere|date('Y-m-d') : '' }}<br><b>Catégorie : </b> {% for genre in series.Kinds  %} {{ genre }}{% endfor %} <br><b>Langue : </b> {{ series.language }}</p>
+            <h2>Note {{ series.score }}</h2>
+            <img src="{{ base_url~series.image }}" alt="illustration-serie">
+        </section>
+        <section class="section-avis-saison">
+            <h2>Notre avis</h2>
+            <p>{% if  is_granted('ROLE_ADMIN')  %}
+                <br><br><a class="bouton" href="{{ path('series_edit', {'id': series.id}) }}">Editer</a><br><br><br>
+            {% else %}
+            {% endif %}
+            {% if series.avis != null %}
+            <td>{{ series.avis }}</td>
+            {% else %}
+            <td>Aucun avis n'est disponible pour le moment...</td>
+            {% endif %}</p>
+        </section>
+        <div id="CommentaireNonTrie">
+        <section class="section-infos-commentaires">
+            <h2>Commentaire(s)</h2>
+            <div><button onclick="getCommentaireASC();" class="btn-primary ordre">Trier par note croissante</button>
+                <button onclick="getCommentaireDESC();" class="btn-primary ordre">Trier par notes décroissante</button>
+            </div>
+            <br>
+            {% if is_granted('ROLE_USER') %}
+                <a class="bouton ajout" href="{{ path('comments_new', {'id': series.id}) }}">Ajouter un commentaire</a>
+            {% endif %}
+            {% for comment in comments  %}
+            <article class="les-commentaires-utilisateurs">
+                    {% if is_granted('ROLE_ADMIN') %}
+                <div>
+                    <p>{{ comment.User.getUsername() }}</p>
+                    <p>{{ comment.note }}/10</p>
+                </div>
+                <p class="les-commentaires-utilisateurs-com">{{ comment.content }}</p>
+                <div class="les-boutons-utilisateur-commentaires">
+                                    {% if comment.validated == 1 %}
+                                        <a class="btn btn-primary activation" href="{{ path('validate_comment', {'id': comment.id}) }}">Dévalider le commentaire</a>
+                                    {% else %}
+                                        <a class="btn btn-primary activation" href="{{ path('validate_comment', {'id': comment.id}) }}">Valider le commentaire</a>
+                                    {% endif %}
+                        {% else %}
+                            {% if comment.validated == 1%}
+                                    {{ comment.User.getUsername() }}
+                                    {{ comment.content }}
+                                    {{ comment.note }}
+                            {% endif %}
+                        {% endif %}
+                </div>
+            </article>
+            {% endfor %}
+        </section>
+        </div>
+        <div id="CommentaireNoteASC" style="display:none;">
+            <section class="section-infos-commentaires">
+                <h2>Commentaire(s)</h2>
+                {% if is_granted('ROLE_USER') %}
+                    <a class="bouton ajout" href="{{ path('comments_new', {'id': series.id}) }}">Ajouter un commentaire</a>
+                {% endif %}
+                {% for comment in commentsNotesASC  %}
+                    <article class="les-commentaires-utilisateurs">
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <div>
+                            <p>{{ comment.User.getUsername() }}</p>
+                            <p>{{ comment.note }}/10</p>
+                        </div>
+                        <p class="les-commentaires-utilisateurs-com">{{ comment.content }}</p>
+                        <div class="les-boutons-utilisateur-commentaires">
+                            {% if comment.validated == 1 %}
+                                <p> Oui</p>
+                                <a class="btn btn-primary activation" href="{{ path('validate_comment', {'id': comment.id}) }}">Dévalider le commentaire</a>
+                            {% else %}
+                                <p>Non</p>
+                                <a class="btn btn-primary activation" href="{{ path('validate_comment', {'id': comment.id}) }}">Valider le commentaire</a>
+                            {% endif %}
+                            {% else %}
+                                {% if comment.validated == 1%}
+                                    {{ comment.User.getUsername() }}
+                                    {{ comment.content }}
+                                    {{ comment.note }}
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </article>
+                {% endfor %}
+            </section>
+        </div>
+        <div id="CommentaireNoteDESC" style="display:none;">
+            <section class="section-infos-commentaires">
+                <h2>Commentaire(s)</h2>
+                {% if is_granted('ROLE_USER') %}
+                    <a class="bouton ajout" href="{{ path('comments_new', {'id': series.id}) }}">Ajouter un commentaire</a>
+                {% endif %}
+                {% for comment in commentsNotesDESC  %}
+                    <article class="les-commentaires-utilisateurs">
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <div>
+                            <p>{{ comment.User.getUsername() }}</p>
+                            <p>{{ comment.note }}/10</p>
+                        </div>
+                        <p class="les-commentaires-utilisateurs-com">{{ comment.content }}</p>
+                        <div class="les-boutons-utilisateur-commentaires">
+                            {% if comment.validated == 1 %}
+                                <p> Oui</p>
+                                <a class="btn btn-primary activation" href="{{ path('validate_comment', {'id': comment.id}) }}">Dévalider le commentaire</a>
+                            {% else %}
+                                <p>Non</p>
+                                <a class="btn btn-primary activation" href="{{ path('validate_comment', {'id': comment.id}) }}">Valider le commentaire</a>
+                            {% endif %}
+                            {% else %}
+                                {% if comment.validated == 1%}
+                                    {{ comment.User.getUsername() }}
+                                    {{ comment.content }}
+                                    {{ comment.note }}
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </article>
+                {% endfor %}
+            </section>
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h1>Series</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ series.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ series.name }}</td>
+            </tr>
+            <tr>
+                <th>Summary</th>
+                <td>{{ series.summary }}</td>
+            </tr>
+            <tr>
+                <th>Language</th>
+                <td>{{ series.language }}</td>
+            </tr>
+            <tr>
+                <th>Score</th>
+                <td>{{ series.score }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ series.status }}</td>
+            </tr>
+            <tr>
+                <th>Premiere</th>
+                <td>{{ series.premiere ? series.premiere|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+
+            <tr>
+                <th>Image</th>
+                <td>{{ series.image }}</td>
+            </tr>
+            <tr>
+                <th>Created_at</th>
+                <td>{{ series.createdAt ? series.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <h1>Commentaires</h1>
+    {% if is_granted('ROLE_USER') %}
+        <a class="btn btn-primary" href="{{ path('comments_new', {'id': series.id}) }}">Ajouter un commentaire</a>
+    {% endif %}
+    <h4>Moyenne note commentaire validé : {{ moyenne }}</h4>
+    <div id="CommentaireNonTrie">
+    {% for comment in comments  %}
+        {% if is_granted('ROLE_ADMIN') %}
+        <table>
+            <tr>
+                <th>User</th>
+                <td><a  href="{{ path('user_show', {'id': comment.User.getId()}) }}">{{ comment.User.getUsername() }}</a></td>
+            </tr>
+            <tr>
+                <th> Contenu</th>
+                <td> {{ comment.content }}</td>
+                <th>Note</th>
+                <td>{{ comment.note }}</td>
+                <th> validé ?</th>
+                {% if comment.validated == 1 %}
+                    <td> Oui</td>
+                    <a class="btn btn-primary" href="{{ path('validate_comment', {'id': comment.id}) }}">Dévalider le commentaire</a>
+                {% else %}
+                    <td>Non</td>
+                    <a class="btn btn-primary" href="{{ path('validate_comment', {'id': comment.id}) }}">Valider le commentaire</a>
+                {% endif %}
+
+            </tr>
+        </table>
+        {% else %}
+            {% if comment.validated == 1%}
+                <table>
+                    <tr>
+                        <th>User</th>
+                        <td>{{ comment.User.getUsername() }}</td>
+                    </tr>
+                    <tr>
+                        <th> Contenu</th>
+                        <td> {{ comment.content }}</td>
+                    </tr>
+                    <tr>
+                        <th>Note</th>
+                        <td>{{ comment.note }}</td>
+                    </tr>
+                </table>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+    </div>
+    <script>
+        function getCommentaireASC() {
+            div1 = document.getElementById("CommentaireNonTrie");
+            div2 = document.getElementById("CommentaireNoteASC");
+            div3 = document.getElementById("CommentaireNoteDESC");
+            div1.setAttribute("style","display: none;");
+            div2.setAttribute("style","display: block;");
+            div3.setAttribute("style","display: none;");
+        }
+        function getCommentaireDESC() {
+            div1 = document.getElementById("CommentaireNonTrie");
+            div2 = document.getElementById("CommentaireNoteASC");
+            div3 = document.getElementById("CommentaireNoteDESC");
+            div1.setAttribute("style","display: none;");
+            div2.setAttribute("style","display: none;");
+            div3.setAttribute("style","display: block;");
+        }
+    </script>
+    <div id="CommentaireNoteASC" style="display:none;">
+        {% for comment in commentsNotesASC  %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <table>
+                    <tr>
+                        <th>User</th>
+                        <td>{{ comment.User.getUsername() }}</td>
+                    </tr>
+                    <tr>
+                        <th> Contenu</th>
+                        <td> {{ comment.content }}</td>
+                        <th>Note</th>
+                        <td>{{ comment.note }}</td>
+                        <th> validé ?</th>
+                        {% if comment.validated == 1 %}
+                            <td> Oui</td>
+                            <a class="btn btn-primary" href="{{ path('validate_comment', {'id': comment.id}) }}">Dévalider le commentaire</a>
+                        {% else %}
+                            <td>Non</td>
+                            <a class="btn btn-primary" href="{{ path('validate_comment', {'id': comment.id}) }}">Valider le commentaire</a>
+                        {% endif %}
+
+                    </tr>
+                </table>
+            {% else %}
+                {% if comment.validated == 1%}
+                    <table>
+                        <tr>
+                            <th>User</th>
+                            <td>{{ comment.User.getUsername() }}</td>
+                        </tr>
+                        <tr>
+                            <th> Contenu</th>
+                            <td> {{ comment.content }}</td>
+                        </tr>
+                        <tr>
+                            <th>Note</th>
+                            <td>{{ comment.note }}</td>
+                        </tr>
+                    </table>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div id="CommentaireNoteDESC" style="display:none;">
+        {% for comment in commentsNotesDESC  %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <table>
+                    <tr>
+                        <th>User</th>
+                        <td>{{ comment.User.getUsername() }}</td>
+                    </tr>
+                    <tr>
+                        <th> Contenu</th>
+                        <td> {{ comment.content }}</td>
+                        <th>Note</th>
+                        <td>{{ comment.note }}</td>
+                        <th> validé ?</th>
+                        {% if comment.validated == 1 %}
+                            <td> Oui</td>
+                            <a class="btn btn-primary" href="{{ path('validate_comment', {'id': comment.id}) }}">Dévalider le commentaire</a>
+                        {% else %}
+                            <td>Non</td>
+                            <a class="btn btn-primary" href="{{ path('validate_comment', {'id': comment.id}) }}">Valider le commentaire</a>
+                        {% endif %}
+
+                    </tr>
+                </table>
+            {% else %}
+                {% if comment.validated == 1%}
+                    <table>
+                        <tr>
+                            <th>User</th>
+                            <td>{{ comment.User.getUsername() }}</td>
+                        </tr>
+                        <tr>
+                            <th> Contenu</th>
+                            <td> {{ comment.content }}</td>
+                        </tr>
+                        <tr>
+                            <th>Note</th>
+                            <td>{{ comment.note }}</td>
+                        </tr>
+                    </table>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+    <button onclick="getCommentaireASC();" class="btn-primary">Trier par note croissante</button>
+    <button onclick="getCommentaireDESC();" class="btn-primary">Trier par notes décroissante</button>
+    <h1>Saison de la série:</h1>
+    {% if is_granted('ROLE_USER') %}
+    <a class="btn btn-primary" href="{{ path('serie_seen', {'id': series.id}) }}">J'ai vu toute la série ! </a>
+    <a class="btn btn-danger" href="{{ path('serie_unseen', {'id': series.id}) }}">J'ai n'ai pas vu toute la série! </a>
+    {% endif %}
+    {% for saison in saisons %}
+        <table>
+            <tr>
+                <th>Saison n° {{ saison.season }}</th>
+                <td>Episode n° {{ saison.number }}</td>
+                <td> {{ saison.name }}</td>
+            </tr>
+        </table>
+        {% if is_granted('ROLE_USER') %}
+            {% set trouve = false %}
+            {% for episode in app.user.Episodes  %}
+                {% if episode.id == saison.id %}
+                    {% set trouve = true %}
+                {% endif %}
+            {% endfor %}
+            {% if trouve == true %}
+                <a class="btn btn-danger" href="{{ path('episode_seen', {'id': saison.id}) }}">J'ai n'ai pas vu cet épisode !</a>
+                <a class="btn btn-primary" href="{{ path('saison_seen', {'id': saison.id, 'saison': saison.season}) }}">J'ai vu toute la saison {{ saison.season }} ! </a>
+                <a class="btn btn-danger" href="{{ path('saison_unseen', {'id': saison.id, 'saison': saison.season}) }}">J'ai n'ai pas vu toute la saison {{ saison.season }} ! </a>
+            {% else %}
+                <a class="btn btn-primary" href="{{ path('episode_seen', {'id': saison.id}) }}">J'ai vu cet épisode !</a>
+                <a class="btn btn-primary" href="{{ path('saison_seen', {'id': saison.id, 'saison': saison.season}) }}">J'ai vu toute la saison {{ saison.season }} !</a>
+                <a class="btn btn-danger" href="{{ path('saison_unseen', {'id': saison.id, 'saison': saison.season}) }}">J'ai n'ai pas vu toute la saison {{ saison.season }} ! </a>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+    <a href="{{ path('series_index') }}">back to list</a>
+
+    <a href="{{ path('series_edit', {'id': series.id}) }}">edit</a>
+
+    {{ include('series/_delete_form.html.twig') }}
+{% endblock %}

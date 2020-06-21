@@ -1,0 +1,161 @@
+h1, h2, p {
+    font-family: sans-serif;
+    color: white;
+}
+h1 {
+    margin-bottom: -80px;
+}
+.contenu-du-site {
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1000px;
+    padding: 35px;
+    text-align: center;
+    border-radius: 11px;
+}
+
+.contenu-du-site h1 {
+    font-size: 35px;
+}
+.contenu-du-site section {
+    margin-top: 73px;
+}
+section-infos-serie {
+    position: relative;
+    top: -100px;
+}
+.section-infos-serie img {
+    width: 100%;
+}
+.section-avis-saison p {
+    word-wrap: break-word;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 14px;
+    line-height: 21px;
+}
+.bouton {
+    padding: 15px;
+    padding-left: 19px;
+    padding-right: 19px;
+    border-radius: 30px;
+    border: none;
+    height: 50px;
+    background-color: #30D9A9;
+    text-align: center;
+    color: white;
+    margin-right: 9px;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+}
+.btn-primary.ordre {
+    margin: 10px;
+}
+.bouton:focus {
+    outline: none;
+}
+.bouton:hover {
+    background-color: #3ae0b2;
+    transition-duration: 0.1s;
+}
+.section-infos-saison article {
+    background-color: white;
+    border-radius: 11px;
+    display: flex;
+    margin: 10px;
+}
+.section-infos-saison article h3 {
+    padding: 10px;
+    margin-top: -3px;
+}
+.section-infos-saison article div {
+    width: 190px;
+    margin: 10px;
+}
+.section-infos-saison article div img {
+    width: 170px;
+}
+section-infos-commentaires h2 {
+    margin: 15px;
+}
+section-infos-commentaires h2, section-infos-commentaires p {
+    color: black;
+}
+.bouton.ajout {
+    position: relative;
+    top: 7px;
+}
+
+.note-article-utilisateur {
+    position: relative;
+    margin-top: -100px;
+}
+.note-article-utilisateur input {
+    width: 50px;
+    height: 30px;
+    border-radius: 3px;
+    border: solid 1px black;
+    margin: 10px;
+    text-align: center;
+}
+avis-article-utilisateur {
+    background-color: white;
+    position: relative;
+    top: -130px;
+    left: 63px;
+    width: 500px;
+    height: 200px;
+
+}
+.bouton.ajoutermonavis {
+    margin: 30px;
+    margin-bottom: 17px;
+}
+.les-commentaires-utilisateurs {
+    margin-top: 100px;
+    margin-bottom: 10px;
+    width: 700px;
+    height: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    border-radius: 11px;
+}
+.btn.btn-primary.activation {
+    position: relative;
+    top: 100px;
+}
+.les-commentaires-utilisateurs div:nth-child(1) {
+    position: relative;
+    width: 130px;
+    top: 55px;
+}
+.les-commentaires-utilisateurs div:nth-child(1) img {
+    width: 90px;
+    border-radius: 50%;
+    margin: 15px;
+}
+.les-commentaires-utilisateurs div:nth-child(1) p:nth-child(2) {
+    font-weight: 600;
+}
+.les-commentaires-utilisateurs p {
+    color: black;
+}
+.les-commentaires-utilisateurs-com {
+    word-wrap: break-word;
+    position: relative;
+    top: 0px;
+    width: 500px;
+    left: 163px;
+}
+.les-boutons-utilisateur-commentaires {
+    position: relative;
+    top: -140px;
+    left: 100px;
+}
+.les-boutons-utilisateur-commentaires p {
+    color: black;
+}

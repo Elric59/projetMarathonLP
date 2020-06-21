@@ -1,0 +1,15 @@
+$primary: darken(#428bca, 20%);
+
+//Pimp me iam famous
+
+
+$theme-colors: (
+        "colorA": #30D9A9,
+        "colorB": #37A691,
+        "colorC": #590253,
+        "colorD": #40012F,
+        "colorE": #26071B
+);
+
+@import "~bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/bootstrap-grid";

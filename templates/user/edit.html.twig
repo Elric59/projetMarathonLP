@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block body %}
+
+    <div style="margin-left: 10%; margin-top: 5%">
+
+
+
+    <div style="margin-top: 5%;">
+        <h1>Edit User</h1>
+    </div>
+
+
+
+        <div style="margin-top: 3%; margin-bottom: 1%; ">
+    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+        </div>
+
+
+    <button style="background-color: #428bca; border-radius: 20px; border: none;">
+        <a href="{{ path('user_index') }}" style="margin-left: 20px; margin-right: 20px">back to list</a>
+    </button>
+
+    <button style="background-color: #428bca; border-radius: 20px; border: none">
+        {{ include('user/_delete_form.html.twig') }}
+    </button>
+
+
+    </div>
+
+{% endblock %}
